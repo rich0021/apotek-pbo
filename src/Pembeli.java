@@ -1,12 +1,9 @@
 import java.util.*;
 
 public class Pembeli extends Obat {
-    public Pembeli(){
-        super.verify();
-    }
-    
     public void Menu() {
         Scanner input = new Scanner(System.in);
+        
         System.out.println("Selamat datang di Apotek Sauyunan\n");
         System.out.println("=================");
         System.out.println("List Seluruh Obat");
