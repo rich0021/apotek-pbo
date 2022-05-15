@@ -1,41 +1,52 @@
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
 
-public abstract class Obat {
+public class Obat implements Crud{
+    File fileObat = new File("C:/Users/MUTTAQIN/Documents/Java Project/apotek-pbo/file/obat.txt");
+    ArrayList<String> arrayObat = new ArrayList<String>();
     
-    public void tampilkan() {
-        boolean lanjutkan = true;
-        String pilihanUser;
-        
-        Scanner input = new Scanner(System.in);
-        
-        while(lanjutkan) {
-            System.out.println("Selamat datang di Apotek Sauyunan\n");
-            System.out.println("1.\tLihat obat yang tersedia");
-            System.out.println("2.\tBeli data obat");
-            
-            System.out.print("\n\nPilihan anda: ");
-            pilihanUser = input.next();
 
-            switch (pilihanUser) {
-                case "1":
-                    System.out.println("\n===============");
-                    System.out.println("List seluruh obat");
-                    System.out.println("=================");
-                    break;
-                case "2":
-                    System.out.println("\n===============");
-                    System.out.println("Beli obat");
-                    System.out.println("=================");
-                    break;
-                default:
-                    System.err.println("\nInput salah\nSilakan masukkan input yang tersedia [1-2]");
-            }
-            System.out.print("Apakah anda ingin melanjutkan (y/n)? ");
-            pilihanUser = input.next();
+    public Obat(){
+        if (!this.fileObat.exists()) {
+            try {
+                if (!this.fileObat.createNewFile()) {
+                    System.out.println("File Gagal Dibuat");
+                    System.exit(1);
+                }
 
-            if(pilihanUser.equalsIgnoreCase("n")) {
-                System.exit(0);
+            } catch (IOException e) {
+                System.out.println("Terjadi Error.");
+                e.printStackTrace();
+                System.exit(1);
             }
         }
+    }
+
+    public void readObat() {
+        try {
+            Scanner myReader = new Scanner(this.fileObat);
+            int nomor = 1;
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                System.out.println(nomor +". "+data);
+                nomor++;
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+
+    public String tambahObat() {
+        return "a";
+    }
+
+    public String hapusObat() {
+        return "b";
+    }
+
+    public String updateObat() {
+        return "c";
     }
 }
