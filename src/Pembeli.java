@@ -12,5 +12,6 @@ public class Pembeli extends Obat {
         System.out.println("");
         System.out.print("Silahkan Masukan Angka Obat Yang Akan Dibeli : ");
         String pilihanUser = input.next();
+        
     }
 }

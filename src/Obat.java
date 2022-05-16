@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.*;
 
 public class Obat implements Crud{
-    File fileObat = new File("C:/Users/MUTTAQIN/Documents/Java Project/apotek-pbo/file/obat.txt");
+    File fileObat = new File("C:/Users/USER/apotek-pbo/file/obat.txt");
     ArrayList<String> arrayObat = new ArrayList<String>();
     
 
@@ -25,10 +25,11 @@ public class Obat implements Crud{
     public void readObat() {
         try {
             Scanner myReader = new Scanner(this.fileObat);
+            System.out.println("| no |\tnama obat\t|\tstok\t|");
             int nomor = 1;
             while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                System.out.println(nomor +". "+data);
+                StringTokenizer data = new StringTokenizer(myReader.nextLine(), ",");
+                System.out.println("  " + nomor + "\t" + data.nextToken() + "\t\t" + data.nextToken());
                 nomor++;
             }
             myReader.close();
