@@ -25,8 +25,9 @@ public class Obat implements Crud{
     public void readObat() {
         try {
             Scanner myReader = new Scanner(this.fileObat);
+            System.out.println("=====================================");
             System.out.println("| no |       Nama Obat       | stok |");
-            System.out.println("===========================================");
+            System.out.println("=====================================");
             int nomor = 1;
             while (myReader.hasNextLine()) {
                 StringTokenizer data = new StringTokenizer(myReader.nextLine(), ",");
@@ -36,6 +37,7 @@ public class Obat implements Crud{
                 nomor++;
             }
             myReader.close();
+            System.out.println("=====================================");
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
