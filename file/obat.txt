@@ -1,4 +1,4 @@
-oskadon  ,2,19-07-2022
+oskadon,2,19-07-2022
 tolak angin,12,19-07-2022
 mixagrip,3,19-07-2022
-neozep   ,4,12-02-2022
+neozep,4,12-02-2022
