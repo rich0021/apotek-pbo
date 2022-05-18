@@ -1,0 +1,2 @@
+rich,123,user
+admin,admin,admin
