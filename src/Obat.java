@@ -3,8 +3,6 @@ import java.io.*;
 
 public class Obat implements Crud{
     File fileObat = new File("C:/Users/MUTTAQIN/Documents/Java Project/apotek-pbo/file/obat.txt");
-    ArrayList<String> arrayObat = new ArrayList<String>();
-    
 
     public Obat(){
         if (!this.fileObat.exists()) {
