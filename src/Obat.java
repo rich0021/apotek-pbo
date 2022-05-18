@@ -28,14 +28,19 @@ public class Obat implements Crud{
     public void readObat() {
         try {
             Scanner myReader = new Scanner(this.fileObat);
-            System.out.println("| no |\tnama obat\t|\tstok\t|");
+            System.out.println("=====================================");
+            System.out.println("| no |       Nama Obat       | stok |");
+            System.out.println("=====================================");
             int nomor = 1;
             while (myReader.hasNextLine()) {
                 StringTokenizer data = new StringTokenizer(myReader.nextLine(), ",");
-                System.out.println("  " + nomor + "\t" + data.nextToken() + "\t\t" + data.nextToken());
+                System.out.printf("| %-2d |", nomor);
+                System.out.printf(" %-21s ", data.nextToken());
+                System.out.printf("| %-4s |\n", data.nextToken());
                 nomor++;
             }
             myReader.close();
+            System.out.println("=====================================");
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
@@ -88,8 +93,114 @@ public class Obat implements Crud{
         return "b";
     }
 
-    public String updateObat() {
-        return "c";
+    public void updateObat() {
+        try {
+            // ambil file/database ori
+            File obat = new File("C:/Users/USER/apotek-pbo/file/obat.txt");
+            FileReader fileInput = new FileReader(obat);
+            BufferedReader bufferedInput = new BufferedReader(fileInput);
+        
+            // buat database/file sementara
+            File tempFile = new File("C:/Users/USER/apotek-pbo/file/tempObat.txt");
+            FileWriter fileOutput = new FileWriter(tempFile);
+            BufferedWriter bufferedOutput = new BufferedWriter(fileOutput);
+            
+            // tampilkan data
+            readObat();
+
+            // ambil user input
+            Scanner input = new Scanner(System.in);
+            System.out.print("\nMasukkan nomor obat yang akan diupdate: ");
+            int updateNum = input.nextInt();
+            
+            // tampilkan data yang akan diupdate
+            String data = bufferedInput.readLine();
+            int numList = 0;
+
+            while(data != null) {
+                numList++;
+
+                StringTokenizer st = new StringTokenizer(data, ",");
+
+                if(updateNum == numList) {
+                    System.out.println("\nData yang akan diupdate adalah:");
+                    System.out.println("----------------------------------");
+                    System.out.println("Nama obat             :" + st.nextToken());
+                    System.out.println("Stok obat             :" + st.nextToken());
+                    System.out.println("Tanggal expire obat   :" + st.nextToken());
+
+                // update datanya
+
+                    // mengambil input dari admin
+                    String[] fieldData = {"nama", "stok", "tanggal expire"};
+                    String[] tempData = new String[3];
+
+                    // refresh token
+                    st = new StringTokenizer(data, ",");
+                    
+                    for (int i = 0; i < fieldData.length; i++) {
+                        boolean isUpdate = getYesorNo("Apakah anda ingin mengubah "+ fieldData[i] +" obat?");
+                        
+                        String dataAsli = st.nextToken();
+                        if(isUpdate) {
+                            // admin input
+                            input = new Scanner(System.in);
+                            System.out.print("Masukkan "+ fieldData[i] +" baru: ");
+                            tempData[i] = input.nextLine();
+                        } else {
+                            tempData[i] = dataAsli;
+                        }
+                    }
+                    
+                    // tampilkan data baru
+                    st = new StringTokenizer(data, ",");
+                    
+                    System.out.println("\nData baru ");
+                    System.out.println("----------------------------------");
+                    System.out.println("Nama obat             :" + st.nextToken() + " -> " + tempData[0]);
+                    System.out.println("Stok obat             :" + st.nextToken() + " -> " + tempData[1]);
+                    System.out.println("Tanggal expire obat   :" + st.nextToken() + " -> " + tempData[2]);
+                    
+                    boolean isUpdate = getYesorNo("Apakah anda ingin menyimpan data baru tersebut");
+                    
+                    if(isUpdate) {
+                        String namaObat = tempData[0];
+                        String stok = tempData[1];
+                        String tanggalExpire = tempData[2];
+
+                        bufferedOutput.write(namaObat + "," + stok + "," + tanggalExpire);
+                    } else {
+                        // copy data
+                        bufferedOutput.write(data);
+                    }
+                } else {
+                    // copy datanya
+                    bufferedOutput.write(data);
+                    
+                }
+                bufferedOutput.newLine();
+
+                data = bufferedInput.readLine();
+            }
+            
+            // menulis data ke file
+            bufferedOutput.flush();
+            bufferedOutput.close();
+            fileOutput.close();
+            bufferedInput.close();
+            fileInput.close();
+
+            System.gc();
+            
+            // delete original file
+            obat.delete();
+            // rename tempObat menjadi obat.txt
+            tempFile.renameTo(obat);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     public boolean getYesorNo(String message){

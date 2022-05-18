@@ -30,6 +30,10 @@ public class Apoteker extends Obat {
                     break;
                 case "3":
                     // tampil menu update obat
+                    System.out.println("================");
+                    System.out.println("Update data obat");
+                    System.out.println("================");
+                    super.updateObat();
                     break;
                 case "4":
                     // program beres / masuk ke program utama
