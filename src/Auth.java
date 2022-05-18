@@ -20,10 +20,10 @@ public class Auth {
         }
     }
 
-    public void login() throws IOException {
-        Scanner myReader = new Scanner(this.fileUser);
-        Scanner inputReader = new Scanner(System.in);
+    public void login() {
         try {
+            Scanner myReader = new Scanner(this.fileUser);
+            Scanner inputReader = new Scanner(System.in);
             System.out.println("=======================");
             System.out.println("         Login         ");
             System.out.println("=======================");
@@ -39,6 +39,8 @@ public class Auth {
                 String role = data.nextToken().toLowerCase();
                 if(username.equals(name) && password.equals(pw)){
                     if (role.equals("user")) {
+                        myReader.close();
+                        inputReader.close();
                         Pembeli user = new Pembeli();
                         user.Menu();
                     }else{
@@ -56,9 +58,6 @@ public class Auth {
             System.out.println("Terjadi Error.");
             e.printStackTrace();
             System.exit(1);
-        }finally {
-            myReader.close();
-            inputReader.close();
         }
     }
 
