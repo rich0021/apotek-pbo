@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.*;
 
 public class Auth {
-    File fileUser = new File("C:/Users/MUTTAQIN/Documents/Java Project/apotek-pbo/file/user.txt");
+    File fileUser = new File("C:/users/USER/apotek-pbo/file/user.txt");
 
     public Auth(){
         if (!this.fileUser.exists()) {
@@ -83,7 +83,7 @@ public class Auth {
     public void register() {
         try {
             Scanner inputReader = new Scanner(System.in);
-            FileOutputStream myWriter = new FileOutputStream("C:/Users/MUTTAQIN/Documents/Java Project/apotek-pbo/file/user.txt", true);    
+            FileOutputStream myWriter = new FileOutputStream("C:/users/USER/apotek-pbo/file/user.txt", true);    
             System.out.println("=======================");
             System.out.println("        Register       ");
             System.out.println("=======================");

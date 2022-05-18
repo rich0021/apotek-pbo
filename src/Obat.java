@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.*;
 
 public class Obat implements Crud{
-    File fileObat = new File("C:/Users/MUTTAQIN/Documents/Java Project/apotek-pbo/file/obat.txt");
+    File fileObat = new File("C:/users/USER/apotek-pbo/file/obat.txt");
 
     public Obat(){
         if (!this.fileObat.exists()) {
