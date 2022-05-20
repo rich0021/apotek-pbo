@@ -91,61 +91,61 @@ public class Obat implements Crud{
 
     public void hapusObat()  {
         try {
-        // database asli
-        File obat = new File("C:/Users/USER/apotek-pbo/file/obat.txt");
-        FileReader fileInput = new FileReader(obat);
-        BufferedReader bufferedInput = new BufferedReader(fileInput);
-        //database sementara
-        File tempDB = new File("C:/Users/USER/apotek-pbo/file/tempdb.txt");
-        FileWriter fileOutput = new FileWriter(tempDB);
-        BufferedWriter bufferOutput = new BufferedWriter(fileOutput);
-        //showing database 
-        System.out.println("list buku");
-        readObat();
-        //ambil user input untuk delete
-        Scanner terminalInput = new Scanner(System.in);
-        System.out.print("\nMasukan nomor obat yang akan dihapus: ");
-        int deleteNum = terminalInput.nextInt();
-        //looping untuk membaca tiap data baris  dan menskip data yang akan dihapus 
-        int entryCounts = 0;
-        String data = bufferedInput.readLine();
-        while (data != null){
-            entryCounts++;
-            boolean isDelete = false;
-            StringTokenizer st = new StringTokenizer(data,",");
-            //tampilkan data yang ingin dihapus
-            if(deleteNum == entryCounts){
-                System.out.println("data yang ingin anda hapus adalah: ");
-                System.out.println("---------------------------------");
-                System.out.println("nomor obat       : " + st.nextToken());
-                System.out.println("nama obat       : " + st.nextToken());
-                System.out.println("exp date       : " + st.nextToken());
-                isDelete = getYesorNo("apakah anda ingin menghapus obat ini? ");
-            }
-        
-            if (isDelete){
-                //skip pindahkan data dari original ke sementara
-                System.out.println("data berhasil dihapus");
-            }else{
-                // pindahkan data dari original ke sementara
-                bufferOutput.write(data);
-                bufferOutput.newLine();
-            }
-            data = bufferedInput.readLine();
-            }
-            // menulis data ke file
-            bufferOutput.flush();
-            bufferOutput.close();
-            fileOutput.close();
-            bufferedInput.close();
-            fileInput.close();
+            // database asli
+            File obat = new File("C:/Users/USER/apotek-pbo/file/obat.txt");
+            FileReader fileInput = new FileReader(obat);
+            BufferedReader bufferedInput = new BufferedReader(fileInput);
+            //database sementara
+            File tempDB = new File("C:/Users/USER/apotek-pbo/file/tempdb.txt");
+            FileWriter fileOutput = new FileWriter(tempDB);
+            BufferedWriter bufferOutput = new BufferedWriter(fileOutput);
+            //showing database 
+            System.out.println("list buku");
+            readObat();
+            //ambil user input untuk delete
+            Scanner terminalInput = new Scanner(System.in);
+            System.out.print("\nMasukan nomor obat yang akan dihapus: ");
+            int deleteNum = terminalInput.nextInt();
+            //looping untuk membaca tiap data baris  dan menskip data yang akan dihapus 
+            int entryCounts = 0;
+            String data = bufferedInput.readLine();
+            while (data != null){
+                entryCounts++;
+                boolean isDelete = false;
+                StringTokenizer st = new StringTokenizer(data,",");
+                //tampilkan data yang ingin dihapus
+                if(deleteNum == entryCounts){
+                    System.out.println("data yang ingin anda hapus adalah: ");
+                    System.out.println("---------------------------------");
+                    System.out.println("nomor obat       : " + st.nextToken());
+                    System.out.println("nama obat       : " + st.nextToken());
+                    System.out.println("exp date       : " + st.nextToken());
+                    isDelete = getYesorNo("apakah anda ingin menghapus obat ini? ");
+                }
+            
+                if (isDelete){
+                    //skip pindahkan data dari original ke sementara
+                    System.out.println("data berhasil dihapus");
+                }else{
+                    // pindahkan data dari original ke sementara
+                    bufferOutput.write(data);
+                    bufferOutput.newLine();
+                }
+                data = bufferedInput.readLine();
+                }
+                // menulis data ke file
+                bufferOutput.flush();
+                bufferOutput.close();
+                fileOutput.close();
+                bufferedInput.close();
+                fileInput.close();
 
-            System.gc();
-        
-        //delete original file 
-            obat.delete();
-            //rename file sementara ke database
-            tempDB.renameTo(obat);
+                System.gc();
+            
+                //delete original file 
+                obat.delete();
+                //rename file sementara ke database
+                tempDB.renameTo(obat);
         }catch (Exception e) {
             e.printStackTrace();
         }   
