@@ -1,6 +1,6 @@
 interface Crud {
-    String tambahObat();
+    void tambahObat();
     void readObat();
-    String updateObat();
-    String hapusObat();
+    void updateObat();
+    void hapusObat();
 }

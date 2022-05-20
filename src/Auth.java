@@ -45,7 +45,8 @@ public class Auth {
                             user.Menu();
                             break;
                         }else{
-                            System.out.println("Kamu Admin");
+                            Apoteker admin = new Apoteker();
+                            admin.menu();
                             break;
                         }
                     }else{
