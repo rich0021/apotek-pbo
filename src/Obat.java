@@ -99,7 +99,6 @@ public class Obat implements Crud{
             FileWriter fileOutput = new FileWriter(tempDB);
             BufferedWriter bufferOutput = new BufferedWriter(fileOutput);
             //showing database 
-            System.out.println("list buku");
             readObat();
             //ambil user input untuk delete
             Scanner terminalInput = new Scanner(System.in);
