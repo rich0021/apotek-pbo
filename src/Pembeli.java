@@ -15,6 +15,7 @@ public class Pembeli extends Obat {
             while(true) {
                 System.out.println("Selamat datang di Apotek Sauyunan\n");
                 super.readObat();
+                System.out.println("\nKetik 0 untuk keluar dari program");
                 System.out.println("");
                 System.out.print("Silahkan Masukan Angka Obat Yang Akan Dibeli : ");
                 int pilihanUser = inputUser.nextInt();
@@ -41,12 +42,17 @@ public class Pembeli extends Obat {
                             getYesorNo("Apakah anda masih ingin membeli obat?");
                         } else {
                             System.out.println("Gajadi beli");
-
+                            System.exit(0);
+                            
                             fileInput.close();
                             bufferInput.close();
                         }
                     }
                     data = bufferInput.readLine();
+                }
+
+                if(pilihanUser == 0) {
+                    System.exit(0);
                 }
             }
             
