@@ -3,7 +3,8 @@ import java.text.SimpleDateFormat;
 import java.io.*;
 
 public class Obat implements Crud{
-    File fileObat = new File("C:/users/USER/apotek-pbo/file/obat.txt");
+    File fileObat = new File("C:/Users/MUTTAQIN/Documents/Java Project/apotek-pbo/file/obat.txt");
+    File fileObatTmp = new File("C:/Users/MUTTAQIN/Documents/Java Project/apotek-pbo/file/tempObat.txt");
     
     Date date = new Date();
     SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
@@ -48,7 +49,7 @@ public class Obat implements Crud{
 
     public void tambahObat() {
         try {
-            FileWriter fileOutput = new FileWriter("C:/Users/USER/apotek-pbo/file/obat.txt", true);
+            FileWriter fileOutput = new FileWriter("C:/Users/MUTTAQIN/Documents/Java Project/apotek-pbo/file/obat.txt", true);
             BufferedWriter bufferOutput = new BufferedWriter(fileOutput);
             
             Scanner input = new Scanner(System.in);
@@ -91,11 +92,11 @@ public class Obat implements Crud{
     public void hapusObat()  {
         try {
             // database asli
-            File obat = new File("C:/Users/USER/apotek-pbo/file/obat.txt");
+            File obat = new File("C:/Users/MUTTAQIN/Documents/Java Project/apotek-pbo/file/obat.txt");
             FileReader fileInput = new FileReader(obat);
             BufferedReader bufferedInput = new BufferedReader(fileInput);
             //database sementara
-            File tempDB = new File("C:/Users/USER/apotek-pbo/file/tempdb.txt");
+            File tempDB = new File("C:/Users/MUTTAQIN/Documents/Java Project/apotek-pbo/file/tempdb.txt");
             FileWriter fileOutput = new FileWriter(tempDB);
             BufferedWriter bufferOutput = new BufferedWriter(fileOutput);
             //showing database 
@@ -152,12 +153,12 @@ public class Obat implements Crud{
     public void updateObat() {
         try {
             // ambil file/database ori
-            File obat = new File("C:/Users/USER/apotek-pbo/file/obat.txt");
+            File obat = new File("C:/Users/MUTTAQIN/Documents/Java Project/apotek-pbo/file/obat.txt");
             FileReader fileInput = new FileReader(obat);
             BufferedReader bufferedInput = new BufferedReader(fileInput);
         
             // buat database/file sementara
-            File tempFile = new File("C:/Users/USER/apotek-pbo/file/tempObat.txt");
+            File tempFile = new File("C:/Users/MUTTAQIN/Documents/Java Project/apotek-pbo/file/tempObat.txt");
             FileWriter fileOutput = new FileWriter(tempFile);
             BufferedWriter bufferedOutput = new BufferedWriter(fileOutput);
             
@@ -257,6 +258,66 @@ public class Obat implements Crud{
             e.printStackTrace();
         }
 
+    }
+
+    public boolean ValidasiStok(String obat){
+        boolean hasil = false;
+        try {
+            Scanner myReader = new Scanner(this.fileObat);
+            while (myReader.hasNextLine()) {
+                String[] split = myReader.nextLine().split(",");
+                if(obat.equals(split[0])){
+                    int stok = Integer.parseInt(split[1]);
+                    if (stok > 0) {
+                        hasil = true;
+                    }
+                }
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return hasil;
+    }
+
+    public void KurangiStok(String obat){
+        try {
+            Scanner myReader = new Scanner(this.fileObat);
+
+            Scanner myReaderTmp = new Scanner(this.fileObatTmp);
+            FileOutputStream myWriterTmp = new FileOutputStream(this.fileObatTmp, true);
+            
+            while (myReader.hasNextLine()) {
+                String[] split = myReader.nextLine().split(",");
+                if(obat.equals(split[0])){
+                    int stok = Integer.parseInt(split[1]) - 1;
+                    String string = split[0]+","+stok+","+split[2]+"\n";
+                    myWriterTmp.write(string.getBytes());
+                }else{
+                    String string = split[0]+","+split[1]+","+split[2]+"\n";
+                    myWriterTmp.write(string.getBytes());
+                }
+            }
+
+            FileOutputStream myWriterAll = new FileOutputStream(this.fileObat);
+            myWriterAll.write("".getBytes());
+
+            FileOutputStream myWriter = new FileOutputStream(this.fileObat, true);
+
+            while (myReaderTmp.hasNextLine()) {
+                String string = myReaderTmp.nextLine()+"\n";
+                myWriter.write(string.getBytes());
+            }
+
+            FileOutputStream myWriterTmpAll = new FileOutputStream(this.fileObatTmp);
+            myWriterTmp.write("".getBytes());
+
+            myWriterAll.close();
+            myWriterTmpAll.close();
+            myWriterTmp.close();
+            myWriter.close();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean getYesorNo(String message){
