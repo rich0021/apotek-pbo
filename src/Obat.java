@@ -4,7 +4,6 @@ import java.io.*;
 
 public class Obat implements Crud{
     File fileObat = new File("C:/Users/MUTTAQIN/Documents/Java Project/apotek-pbo/file/obat.txt");
-    File fileObatTmp = new File("C:/Users/MUTTAQIN/Documents/Java Project/apotek-pbo/file/tempObat.txt");
     
     Date date = new Date();
     SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
@@ -281,11 +280,10 @@ public class Obat implements Crud{
 
     public void KurangiStok(String obat){
         try {
+            File tempFile = new File("C:/Users/MUTTAQIN/Documents/Java Project/apotek-pbo/file/tempKurang.txt");
             Scanner myReader = new Scanner(this.fileObat);
-
-            Scanner myReaderTmp = new Scanner(this.fileObatTmp);
-            FileOutputStream myWriterTmp = new FileOutputStream(this.fileObatTmp, true);
-            
+            Scanner myReaderTmp = new Scanner(tempFile);
+            FileOutputStream myWriterTmp = new FileOutputStream(tempFile, true);
             while (myReader.hasNextLine()) {
                 String[] split = myReader.nextLine().split(",");
                 if(obat.equals(split[0])){
@@ -308,7 +306,7 @@ public class Obat implements Crud{
                 myWriter.write(string.getBytes());
             }
 
-            FileOutputStream myWriterTmpAll = new FileOutputStream(this.fileObatTmp);
+            FileOutputStream myWriterTmpAll = new FileOutputStream(tempFile);
             myWriterTmp.write("".getBytes());
 
             myWriterAll.close();
